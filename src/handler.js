@@ -26,6 +26,8 @@ async function serveDirectory(path, client = false) {
 		if (client && ctx.request.url.pathname.startsWith(`/${manifest.appDir}/immutable/`)) {
 			ctx.response.headers.set('cache-control', 'public,max-age=31536000,immutable');
 		}
+		
+		ctx.response.headers.set('strict-transport-security', 'max-age=63072000; includeSubDomains; preload')
 		return ctx.send({ root: path, extensions: ['.html'], index: 'index.html' });
 	};
 }
