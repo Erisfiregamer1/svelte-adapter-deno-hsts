@@ -30,7 +30,7 @@ async function serveDirectory(path, client = false) {
 		// Add HSTS header
 		ctx.response.headers.set('strict-transport-security', 'max-age=63072000; includeSubDomains; preload')
 		
-		// CORP headers
+		// COOP / COEP headers
 		ctx.response.headers.set("Cross-Origin-Embedder-Policy", "require-corp");
     ctx.response.headers.set("Cross-Origin-Opener-Policy", "same-origin");
 		return ctx.send({ root: path, extensions: ['.html'], index: 'index.html' });
