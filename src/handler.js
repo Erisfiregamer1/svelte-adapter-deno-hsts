@@ -27,7 +27,12 @@ async function serveDirectory(path, client = false) {
 			ctx.response.headers.set('cache-control', 'public,max-age=31536000,immutable');
 		}
 		
+		// Add HSTS header
 		ctx.response.headers.set('strict-transport-security', 'max-age=63072000; includeSubDomains; preload')
+		
+		// CORP headers
+		ctx.response.headers.set("Cross-Origin-Embedder-Policy", "require-corp");
+    ctx.response.headers.set("Cross-Origin-Opener-Policy", "same-origin");
 		return ctx.send({ root: path, extensions: ['.html'], index: 'index.html' });
 	};
 }
@@ -63,6 +68,8 @@ async function ssr(ctx) {
 			return ctx.request.ip;
 		}
 	});
+	
+	
 	ctx.response.status = response.status;
 	ctx.response.headers = response.headers;
 	ctx.response.body = response.body;
